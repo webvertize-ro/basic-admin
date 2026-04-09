@@ -7,7 +7,12 @@ import toast from 'react-hot-toast';
 import styled from 'styled-components';
 import { useOutsideClick } from '../hooks/useOutsideClick';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPaperclip,
+  faUpload,
+  faX,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 
 const Overlay = styled.div`
   position: fixed;
@@ -60,12 +65,9 @@ const ImageChange = styled.div`
   gap: 0.75rem;
 `;
 
-const CurrentImage = styled.div`
-  border: 1px solid black;
-`;
+const CurrentImage = styled.div``;
 
 const NewImage = styled.div`
-  border: 1px solid black;
   position: relative;
 `;
 
@@ -77,8 +79,17 @@ const DismissButton = styled.button`
   background-color: transparent;
   border: none;
   position: absolute;
-  top: -5px;
+  top: 0;
   right: 0;
+  background-color: #dc2525;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  padding: 0.25rem;
+`;
+
+const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
+  font-size: 0.75rem;
 `;
 
 const StyledImg = styled.img`
@@ -87,8 +98,28 @@ const StyledImg = styled.img`
   border-radius: 0.5rem;
 `;
 
+const UploadButtonContainer = styled.div`
+  display: flex;
+`;
+
+const StyledLabel = styled.label`
+  display: flex;
+  gap: 0.25rem;
+  font-size: 1.2rem;
+  color: black;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  background-color: #68808e;
+  color: #fff;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 const StyledInput = styled.input`
   margin-bottom: 1rem;
+  display: none;
 `;
 
 const ActionButtonsContainer = styled.div`
@@ -177,7 +208,7 @@ function EditContentModal({ field, onClose }) {
           />
         ) : (
           <div>
-            <ImageChange>
+            <ImageChange className="mb-2">
               <CurrentImage>
                 <div className="text-dark">Imaginea actuala: </div>
 
@@ -189,12 +220,12 @@ function EditContentModal({ field, onClose }) {
               </CurrentImage>
               {previewUrl && (
                 <NewImage>
-                  <div className="d-flex justify-content-between">
+                  <div className="d-flex justify-content-between ">
                     <NewImageText className="text-dark">
                       Noua imagine:{' '}
                     </NewImageText>
                     <DismissButton onClick={() => setPreviewUrl('')}>
-                      x
+                      <StyledFontAwesomeIcon icon={faXmark} />
                     </DismissButton>
                   </div>
 
@@ -203,14 +234,23 @@ function EditContentModal({ field, onClose }) {
               )}
             </ImageChange>
 
-            <StyledInput
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                handleFileSelect(e.target.files[0]);
-                e.target.value = null;
-              }}
-            />
+            <UploadButtonContainer>
+              <StyledLabel htmlFor="image">
+                <span>
+                  <FontAwesomeIcon icon={faUpload} />
+                </span>
+                <span>Încarcă imagine</span>
+              </StyledLabel>
+              <StyledInput
+                id="image"
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  handleFileSelect(e.target.files[0]);
+                  e.target.value = null;
+                }}
+              />
+            </UploadButtonContainer>
           </div>
         )}
 

@@ -1,5 +1,5 @@
 // pages/Admin.jsx
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useContent } from '../hooks/useContent';
 import EditContentModal from '../components/EditContentModal';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -17,15 +17,26 @@ const StyledAdmin = styled.div`
   flex-direction: column;
   padding: 2rem;
   color: #fff;
+  position: relative;
 `;
 
 const Tabs = styled.div`
   display: flex;
   justify-content: center;
   gap: 1rem;
+  position: ${(props) => (props.isScrolled ? 'fixed' : 'absolute')};
+  top: 80px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.25);
+  z-index: 1000;
+  padding: 1.5rem;
+`;
 
-  /* gap: 1rem; */
-  /* justify-content: space-between; */
+const ContentContainer = styled.div`
+  padding-top: 175px;
 `;
 
 const IndividualTab = styled.div`
@@ -36,7 +47,7 @@ const IndividualTab = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => (props.selected ? '#fff' : 'transparent')};
+  background-color: ${(props) => (props.selected ? '#fff' : 'lightgrey')};
   color: ${(props) => (props.selected ? '#000' : '#fff')};
 
   &:hover {
@@ -106,6 +117,31 @@ const Content = styled.div`
 function Admin() {
   const { grouped, isLoading } = useContent();
   const [selectedPage, setSelectedPage] = useState('global');
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem('page')) {
+      setSelectedPage(localStorage.getItem('page'));
+    }
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  function handleSelectedTab(page) {
+    if (localStorage.getItem('page')) {
+      setSelectedPage(localStorage.getItem('page'));
+    }
+
+    setSelectedPage(page);
+    // set the selected page in localStorage
+    localStorage.setItem('page', page);
+  }
 
   const [editingField, setEditingField] = useState(null);
 
@@ -114,16 +150,15 @@ function Admin() {
   const pages = Object.entries(grouped).map(([page]) => page);
 
   return (
-    <StyledAdmin className="container">
-      <h2>Administrare conținut</h2>
-
+    <StyledAdmin className="">
       <div>
         {/* Tabs */}
-        <Tabs>
+
+        <Tabs isScrolled={isScrolled}>
           {pages.map((p) => (
             <>
               <IndividualTab
-                onClick={() => setSelectedPage(p)}
+                onClick={() => handleSelectedTab(p)}
                 selected={p === selectedPage}
               >
                 {p}
@@ -131,47 +166,49 @@ function Admin() {
             </>
           ))}
         </Tabs>
-        {/* Content */}
-        {Object.entries(grouped).map(([page, sections]) => {
-          if (page === selectedPage) {
-            return (
-              <div>
-                <Page key={page} className="mb-3">
-                  {/* level 2 - iterating over sections within each page */}
-                  <SectionsContainer>
-                    {Object.entries(sections).map(([section, fields]) => (
-                      <Section key={section} className="mb-2">
-                        <SectionTitle>
-                          Secțiunea: <strong>{section}</strong>
-                        </SectionTitle>
-                        {/* level 3 - iterating over individual fields within each section */}
-                        <FieldsContainer>
-                          {fields.map((field) => (
-                            <Field key={field.id}>
-                              <FieldContent>
-                                <Label>{field.label}: </Label>
-                                <Content>
-                                  {field.content_type === 'image_url'
-                                    ? '[ imagine ]'
-                                    : field.value}
-                                </Content>
-                              </FieldContent>
-                              <EditButton
-                                onClick={() => setEditingField(field)}
-                              >
-                                Editează
-                              </EditButton>
-                            </Field>
-                          ))}
-                        </FieldsContainer>
-                      </Section>
-                    ))}
-                  </SectionsContainer>
-                </Page>
-              </div>
-            );
-          }
-        })}
+        <ContentContainer>
+          <h2>Administrare conținut</h2>
+          {Object.entries(grouped).map(([page, sections]) => {
+            if (page === selectedPage) {
+              return (
+                <div>
+                  <Page key={page} className="mb-3">
+                    {/* level 2 - iterating over sections within each page */}
+                    <SectionsContainer>
+                      {Object.entries(sections).map(([section, fields]) => (
+                        <Section key={section} className="mb-2">
+                          <SectionTitle>
+                            Secțiunea: <strong>{section}</strong>
+                          </SectionTitle>
+                          {/* level 3 - iterating over individual fields within each section */}
+                          <FieldsContainer>
+                            {fields.map((field) => (
+                              <Field key={field.id}>
+                                <FieldContent>
+                                  <Label>{field.label}: </Label>
+                                  <Content>
+                                    {field.content_type === 'image_url'
+                                      ? '[ imagine ]'
+                                      : field.value}
+                                  </Content>
+                                </FieldContent>
+                                <EditButton
+                                  onClick={() => setEditingField(field)}
+                                >
+                                  Editează
+                                </EditButton>
+                              </Field>
+                            ))}
+                          </FieldsContainer>
+                        </Section>
+                      ))}
+                    </SectionsContainer>
+                  </Page>
+                </div>
+              );
+            }
+          })}
+        </ContentContainer>
       </div>
 
       {/* level 1 - iterating over pages */}

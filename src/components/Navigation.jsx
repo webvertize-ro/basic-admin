@@ -82,7 +82,7 @@ function Navigation() {
 
   return (
     <NavContainer>
-      <StyledNav className="navbar navbar-expand-lg">
+      <StyledNav className="navbar navbar-expand-lg fixed-top">
         <div className="container h-100">
           <a className="navbar-brand" href="#">
             <Logo />
@@ -109,7 +109,7 @@ function Navigation() {
                   aria-current="page"
                   to="/admin"
                 >
-                  Solicitări
+                  Administrare Conținut
                 </StyledNavLink>
               </StyledLi>
               {/* <StyledLi className="nav-item">
