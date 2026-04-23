@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }) => {
           setTimeout(async () => {
             try {
               const websiteId = await getAdminData(session.user.id);
+
               setUser(session.user);
               setWebsiteId(websiteId);
             } catch (error) {
