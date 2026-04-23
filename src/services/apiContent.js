@@ -19,6 +19,7 @@ export async function updateTextContent({ id, value }) {
     .select()
     .single();
 
+  console.log('result:', { data, error });
   if (error) throw new Error(error.message);
   return data;
 }

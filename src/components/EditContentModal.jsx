@@ -142,9 +142,20 @@ const SaveBtn = styled.button`
 function EditContentModal({ field, onClose }) {
   const { websiteId } = useAuth();
   const queryClient = useQueryClient();
+  // parse the existing JSON value for social_link fields
+  const parsedSocial =
+    field.content_type === 'social_link'
+      ? JSON.parse(field.value || '{"platform": "facebook", "url": ""}')
+      : null;
+
   const [textValue, setTextValue] = useState(field?.value);
   const [imageFile, setImageFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  // state for social platform and URL (of that platform)
+  const [socialPlatform, setSocialPlatform] = useState(
+    parsedSocial?.platform || 'facebook',
+  );
+  const [socialUrl, setSocialUrl] = useState(parsedSocial?.url || '');
 
   function handleFileSelect(file) {
     const url = URL.createObjectURL(file);
@@ -179,10 +190,25 @@ function EditContentModal({ field, onClose }) {
         key: field?.key,
         file: imageFile,
       });
+    } else if (field.content_type === 'social_link') {
+      // serialize back to JSON string before saving
+      const value = JSON.stringify({
+        platform: socialPlatform,
+        url: socialUrl,
+      });
+      saveContent({ id: field.id, value });
     } else {
       saveContent({ id: field?.id, value: textValue });
     }
   }
+
+  const platformOptions = [
+    { value: 'facebook', label: 'Facebook' },
+    { value: 'instagram', label: 'Instagram' },
+    { value: 'youtube', label: 'YouTube' },
+    { value: 'linkedin', label: 'LinkedIn' },
+    { value: 'tiktok', label: 'TikTok' },
+  ];
 
   const ref = useOutsideClick(field ? onClose : {});
 
@@ -206,6 +232,28 @@ function EditContentModal({ field, onClose }) {
             onChange={(e) => setTextValue(e.target.value)}
             rows={4}
           />
+        ) : field?.content_type === 'social_link' ? (
+          <div>
+            <label>Platformă</label>
+            <select
+              value={socialPlatform}
+              onChange={(e) => setSocialPlatform(e.target.value)}
+            >
+              {platformOptions.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+
+            <label>Link</label>
+            <input
+              type="url"
+              value={socialUrl}
+              onChange={(e) => setSocialUrl(e.target.value)}
+              placeholder="https://facebook.com/pagina-ta"
+            />
+          </div>
         ) : (
           <div>
             <ImageChange className="mb-2">
