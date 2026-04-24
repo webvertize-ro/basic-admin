@@ -24,3 +24,26 @@ export function useContent() {
 
   return { grouped, isLoading, error };
 }
+
+export function useContentInner() {
+  const { websiteId } = useAuth();
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['content', websiteId],
+    queryFn: getContent(websiteId),
+    staleTime: 0,
+  });
+
+  const contentMap =
+    data?.reduce((acc, row) => {
+      // store with page prefix: "home.header_title", "services.header_title"
+      acc[`${row.page}.${row.key}`] = row;
+      // also store without prefix for truly global keys
+      if (row.page === 'global') {
+        acc[row.key] = row;
+      }
+      return acc;
+    }, {}) ?? {};
+
+  return { contentMap, isLoading, error };
+}

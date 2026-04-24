@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { faCopyright } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useContentInner } from '../hooks/useContent';
+import { c } from '../utils/content';
 
 const StyledFooter = styled.footer`
   display: flex;
@@ -28,6 +30,8 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 `;
 
 function Footer() {
+  const { contentMap } = useContentInner();
+
   const currentYear = new Date();
   const year = currentYear.getFullYear();
   return (
@@ -39,7 +43,7 @@ function Footer() {
           <p>Toate drepturile rezervate.</p>
         </Copyright>
         {/* Business Name  */}
-        <BusinessName>[Numele Afacerii]</BusinessName>
+        <BusinessName>{c(contentMap, 'global.brand_name')}</BusinessName>
 
         {/* Year */}
         <Year>{year}</Year>

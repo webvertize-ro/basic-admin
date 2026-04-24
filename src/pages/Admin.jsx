@@ -4,6 +4,7 @@ import { useContent } from '../hooks/useContent';
 import EditContentModal from '../components/EditContentModal';
 import LoadingSpinner from '../components/LoadingSpinner';
 import styled from 'styled-components';
+import { pageLabels, sectionLabels } from '../utils/labels';
 
 const SpinnerContainer = styled.div`
   height: 100vh;
@@ -114,6 +115,10 @@ const Content = styled.div`
   overflow-wrap: break-word;
 `;
 
+const StyledImg = styled.img`
+  max-width: 80px;
+`;
+
 function Admin() {
   const { grouped, isLoading } = useContent();
   const [selectedPage, setSelectedPage] = useState('global');
@@ -160,7 +165,7 @@ function Admin() {
                 onClick={() => handleSelectedTab(p)}
                 selected={p === selectedPage}
               >
-                {p}
+                {pageLabels[p]}
               </IndividualTab>
             </>
           ))}
@@ -178,7 +183,7 @@ function Admin() {
                       {Object.entries(sections).map(([section, fields]) => (
                         <Section key={section} className="mb-2">
                           <SectionTitle>
-                            Secțiunea: <strong>{section}</strong>
+                            Secțiunea: <strong>{sectionLabels[section]}</strong>
                           </SectionTitle>
                           {/* level 3 - iterating over individual fields within each section */}
                           <FieldsContainer>
@@ -187,9 +192,14 @@ function Admin() {
                                 <FieldContent>
                                   <Label>{field.label}: </Label>
                                   <Content>
-                                    {field.content_type === 'image_url'
-                                      ? '[ imagine ]'
-                                      : field.value}
+                                    {field.content_type === 'image_url' ? (
+                                      <StyledImg
+                                        src={field.value}
+                                        alt={field.label}
+                                      />
+                                    ) : (
+                                      field.value
+                                    )}
                                   </Content>
                                 </FieldContent>
                                 <EditButton
