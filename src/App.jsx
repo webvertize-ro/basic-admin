@@ -20,7 +20,7 @@ function App() {
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
-        <Toaster position="top-center" />
+        <Toaster position="top-center" toastOptions={{ duration: 2500 }} />
         <BrowserRouter>
           <Routes>
             <Route
