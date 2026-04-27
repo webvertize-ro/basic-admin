@@ -8,6 +8,8 @@ import styled from 'styled-components';
 import { useOutsideClick } from '../hooks/useOutsideClick';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faX, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { c } from '../utils/content';
+import { useContentInner } from '../hooks/useContent';
 
 const Overlay = styled.div`
   position: fixed;
@@ -140,6 +142,7 @@ const SaveBtn = styled.button`
 `;
 
 function EditContentModal({ field, onClose }) {
+  const { contentMap } = useContentInner();
   const { websiteId } = useAuth();
   const queryClient = useQueryClient();
   // parse the existing JSON value for social_link fields
@@ -211,6 +214,7 @@ function EditContentModal({ field, onClose }) {
   ];
 
   const ref = useOutsideClick(field ? onClose : {});
+  const date = c(contentMap, 'cookies.info_paragraph_1_date');
 
   return (
     <Overlay>
@@ -228,7 +232,11 @@ function EditContentModal({ field, onClose }) {
 
         {field?.content_type === 'text' ? (
           <StyledTextarea
-            value={textValue}
+            value={
+              field.section === 'info'
+                ? textValue.replace('{date}', date)
+                : textValue
+            }
             onChange={(e) => setTextValue(e.target.value)}
             rows={4}
           />

@@ -1,10 +1,11 @@
 // pages/Admin.jsx
 import { useEffect, useState } from 'react';
-import { useContent } from '../hooks/useContent';
+import { useContent, useContentInner } from '../hooks/useContent';
 import EditContentModal from '../components/EditContentModal';
 import LoadingSpinner from '../components/LoadingSpinner';
 import styled from 'styled-components';
 import { pageLabels, sectionLabels } from '../utils/labels';
+import { c } from '../utils/content';
 
 const SpinnerContainer = styled.div`
   height: 100vh;
