@@ -48,4 +48,5 @@ export const sectionLabels = {
   what_recommends_us: 'Ce ne recomandă',
   'thank-you-section': 'Mulțumim',
   'too-many-requests-section': 'Prea multe solicitări',
+  contact: 'Date de contact'
 };
