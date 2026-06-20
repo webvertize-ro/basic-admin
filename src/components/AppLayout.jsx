@@ -4,10 +4,10 @@ import Navigation from './Navigation';
 import { Outlet } from 'react-router-dom';
 
 const StyledAppLayout = styled.div`
-  background-color: rgba(54, 85, 104, 1);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  background: linear-gradient(160deg, #2e2018 0%, #3d2b1f 100%);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 `;
 
 function AppLayout() {
