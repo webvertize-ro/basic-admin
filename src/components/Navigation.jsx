@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import Logo from './Logo';
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import Modal from './EditContentModal';
+import React, { useState } from "react";
+import Logo from "./Logo";
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+import Modal from "./EditContentModal";
+import { logUserOut } from "../services/apiAuth";
 
 const NavContainer = styled.div`
   position: sticky;
@@ -55,7 +56,7 @@ const NavLinks = styled.ul`
   gap: 0.25rem;
 
   @media (max-width: 992px) {
-    display: ${({ $open }) => ($open ? 'flex' : 'none')};
+    display: ${({ $open }) => ($open ? "flex" : "none")};
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
@@ -99,8 +100,10 @@ const StyledNavLink = styled(NavLink)`
   padding: 0 1rem;
   text-decoration: none;
   border-bottom: 3px solid transparent;
-  transition: color 0.2s ease, border-color 0.2s ease;
-  
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+
   &:hover {
     color: #e8a87c;
     border-bottom-color: rgba(232, 168, 124, 0.4);
@@ -141,7 +144,9 @@ const LogoutButton = styled.button`
   letter-spacing: 0.05em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 
   &:hover {
     background: rgba(232, 168, 124, 0.08);
@@ -175,33 +180,34 @@ const MobileToggle = styled.button`
 function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  return <NavContainer>
-    <StyledNav>
-      <NavInner>
-        <a href="#">
-          <Logo />
-        </a>
-        <MobileToggle onClick={() => setMenuOpen((prev) => !prev)}>
-          {menuOpen ? '✕' : '☰'}
-        </MobileToggle>
+  return (
+    <NavContainer>
+      <StyledNav>
+        <NavInner>
+          <a href="#">
+            <Logo />
+          </a>
+          <MobileToggle onClick={() => setMenuOpen((prev) => !prev)}>
+            {menuOpen ? "✕" : "☰"}
+          </MobileToggle>
 
-        <NavLinks $open={menuOpen}>
-          <StyledLi>
-            <StyledNavLink to="/requests">Solicitări</StyledNavLink>
-          </StyledLi>
-          <StyledLi>
-            <StyledNavLink to="/admin">Administrare conținut</StyledNavLink>
-          </StyledLi>
-        </NavLinks>
-        <NavRight>
-          <LogoutButton onClick={() => {
-            localStorage.removeItem('token');
-            window.location.href = '/';
-          }}>Deconectare</LogoutButton>
-        </NavRight>
-      </NavInner>
-    </StyledNav>
-  </NavContainer>
+          <NavLinks $open={menuOpen}>
+            <StyledLi>
+              <StyledNavLink to="/requests">Solicitări</StyledNavLink>
+            </StyledLi>
+            <StyledLi>
+              <StyledNavLink to="/admin">Administrare conținut</StyledNavLink>
+            </StyledLi>
+          </NavLinks>
+          <NavRight>
+            <LogoutButton onClick={() => logUserOut()}>
+              Deconectare
+            </LogoutButton>
+          </NavRight>
+        </NavInner>
+      </StyledNav>
+    </NavContainer>
+  );
 }
 
 export default Navigation;
