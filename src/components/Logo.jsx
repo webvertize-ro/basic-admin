@@ -1,39 +1,35 @@
-import styled from 'styled-components';
-import logoLight from '../assets/basic-business-logo-light.svg';
-import logoDark from '../assets/basic-business-logo-dark.svg';
+import styled from "styled-components";
+import { c, cWidth } from "../utils/content";
+import { useContent } from "../hooks/useContent";
 
-const StyledLogoImg = styled.img`
-  width: 200px;
+const DEFAULT_WIDTH = 160;
+const MIN_WIDTH = 40;
+const MAX_WIDTH = 400;
+
+const StyledImg = styled.img`
+  width: ${(props) => props.$width}px;
+  height: auto;
+  display: block;
 `;
 
-const LogoTitle = styled.div`
-  font-family: 'Montserrat';
-  font-weight: 800;
-  font-size: 1.8rem;
-  color: #1b3c53;
-`;
+function Logo() {
+  const { contentMap } = useContent();
 
-const LogoSubtitle = styled.div`
-  font-family: 'Montserrat';
-  font-weight: 600;
-  color: #1b3c53;
-  font-size: 1rem;
-  margin-top: -10px;
-  font-size: 1rem;
-  margin-left: 7px;
-`;
+  const rawWidth = cWidth(contentMap, "global.logo");
+  const width =
+    Number.isFinite(rawWidth) && rawWidth >= MIN_WIDTH && rawWidth <= MAX_WIDTH
+      ? rawWidth
+      : DEFAULT_WIDTH;
 
-function Logo({ mode }) {
+  const src = c(contentMap, "global.logo");
+  console.log("src in Logo: ", src);
+
   return (
-    <div className="d-flex justify-content-center align-items-center gap-1">
-      <div>
-        {mode === 'dark' ? (
-          <StyledLogoImg src={logoDark} className="img-fluid" />
-        ) : (
-          <StyledLogoImg src={logoLight} className="img-fluid" />
-        )}
-      </div>
-    </div>
+    <StyledImg
+      $width={width}
+      src={c(contentMap, "global.logo")}
+      alt="Logo-ul afacerii [Nume Afacere]"
+    />
   );
 }
 
