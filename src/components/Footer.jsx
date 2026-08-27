@@ -1,16 +1,16 @@
-import styled from 'styled-components';
-import { faCopyright } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useContentInner } from '../hooks/useContent';
-import { c } from '../utils/content';
+import styled from "styled-components";
+import { faCopyright } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContentInner } from "../hooks/useContent";
+import { c } from "../utils/content";
 
 const StyledFooter = styled.footer`
-  background: rgba(46, 32, 24, 0.85);
+  background: rgba(27, 60, 83, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-top: 1px solid rgba(232, 168, 124, 0.12);
+  border-top: 1px solid rgba(127, 165, 184, 0.12);
   padding: 0.75rem 1.5rem;
-  color: rgba(232, 168, 124, 0.6);
+  color: rgba(127, 165, 184, 0.6);
   font-size: 0.78rem;
 `;
 
@@ -39,23 +39,25 @@ const Copyright = styled.div`
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   font-size: 0.9rem;
-  color: rgba(232, 168, 124, 0.5);
+  color: rgba(127, 165, 184, 0.5);
 `;
 
 function Footer() {
-  const {contentMap} = useContentInner();
+  const { contentMap } = useContentInner();
   const year = new Date().getFullYear();
 
-  return <StyledFooter>
-    <FooterInner>
-      <Copyright>
-        <StyledFontAwesomeIcon icon={faCopyright} />
-        <span>Toate drepturile rezervate.</span>
-      </Copyright>
-      <span>{c(contentMap, 'global.brand_name')}</span>
-      <span>{year}</span>
-    </FooterInner>
-  </StyledFooter>
+  return (
+    <StyledFooter>
+      <FooterInner>
+        <Copyright>
+          <StyledFontAwesomeIcon icon={faCopyright} />
+          <span>Toate drepturile rezervate.</span>
+        </Copyright>
+        <span>{c(contentMap, "global.brand_name")}</span>
+        <span>{year}</span>
+      </FooterInner>
+    </StyledFooter>
+  );
 }
 
 export default Footer;

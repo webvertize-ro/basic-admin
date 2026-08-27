@@ -18,10 +18,10 @@ const StyledModal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(46, 32, 24, 0.97);
+  background: rgba(27, 60, 83, 0.97);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(232, 168, 124, 0.15);
+  border: 1px solid rgba(127, 165, 184, 0.15);
   border-radius: 12px;
   z-index: 103;
   color: #fff;
@@ -40,7 +40,7 @@ const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1rem 0.75rem;
-  border-bottom: 1px solid rgba(232, 168, 124, 0.1);
+  border-bottom: 1px solid rgba(127, 165, 184, 0.1);
   flex-shrink: 0;
 `;
 
@@ -73,9 +73,9 @@ const Overlay = styled.div`
 
 const CloseButton = styled.button`
   background: transparent;
-  border: 1px solid rgba(232, 168, 124, 0.2);
+  border: 1px solid rgba(127, 165, 184, 0.2);
   border-radius: 6px;
-  color: rgba(232, 168, 124, 0.6);
+  color: rgba(127, 165, 184, 0.6);
   width: 28px;
   height: 28px;
   display: flex;
@@ -89,7 +89,7 @@ const CloseButton = styled.button`
     color 0.15s ease;
 
   &:hover {
-    background: rgba(232, 168, 124, 0.1);
+    background: rgba(127, 165, 184, 0.1);
     color: #fff;
   }
 `;

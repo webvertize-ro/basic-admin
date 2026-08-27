@@ -9,14 +9,14 @@ const StyledRequest = styled.div`
   gap: 1.25rem;
   padding: 1.25rem;
   border-radius: 10px;
-  background: rgba(46, 32, 24, 0.5);
+  background: rgba(27, 60, 83, 0.5);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(232, 168, 124, 0.1);
+  border: 1px solid rgba(127, 165, 184, 0.1);
   transition: border-color 0.2s ease;
 
   &:hover {
-    border-color: rgba(232, 168, 124, 0.2);
+    border-color: rgba(127, 165, 184, 0.35);
   }
 
   @media (max-width: 600px) {
@@ -47,7 +47,7 @@ const FieldLabel = styled.span`
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: rgba(232, 168, 124, 0.45);
+  color: rgba(127, 165, 184, 1);
   margin-right: 0.4rem;
 `;
 

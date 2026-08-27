@@ -16,10 +16,10 @@ const StyledNav = styled.nav`
   height: 64px;
   display: flex;
   align-items: center;
-  background: rgba(46, 32, 24, 0.55);
+  background: #1b3c53;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(232, 168, 124, 0.15);
+  border-bottom: 1px solid rgba(127, 165, 184, 0.15);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   padding: 0 1.5rem;
 
@@ -93,7 +93,7 @@ const StyledNavLink = styled(NavLink)`
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: rgba(232, 168, 124, 0.8);
+  color: rgba(127, 165, 184, 0.8);
   height: 100%;
   display: flex;
   align-items: center;
@@ -105,13 +105,13 @@ const StyledNavLink = styled(NavLink)`
     border-color 0.2s ease;
 
   &:hover {
-    color: #e8a87c;
-    border-bottom-color: rgba(232, 168, 124, 0.4);
+    color: #7fa5b8;
+    border-bottom-color: rgba(127, 165, 184, 0.4);
   }
 
   &.active {
     color: #fff;
-    border-bottom-color: #e8a87c;
+    border-bottom-color: #7fa5b8;
   }
 
   @media (max-width: 992px) {
@@ -123,12 +123,12 @@ const StyledNavLink = styled(NavLink)`
 
     &:hover {
       border-bottom: none;
-      border-left-color: rgba(232, 168, 124, 0.4);
+      border-left-color: rgba(127, 165, 184, 0.4);
     }
 
     &.active {
       border-bottom: none;
-      border-left-color: #e8a87c;
+      border-left-color: #7fa5b8;
     }
   }
 `;
@@ -136,9 +136,9 @@ const StyledNavLink = styled(NavLink)`
 const LogoutButton = styled.button`
   padding: 0.35rem 0.9rem;
   border-radius: 6px;
-  border: 1px solid rgba(232, 168, 124, 0.25);
+  border: 1px solid rgba(127, 165, 184, 0.25);
   background: transparent;
-  color: rgba(232, 168, 124, 0.7);
+  color: rgba(127, 165, 184, 0.7);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -149,17 +149,17 @@ const LogoutButton = styled.button`
     color 0.2s ease;
 
   &:hover {
-    background: rgba(232, 168, 124, 0.08);
-    color: rgba(232, 168, 124, 0.95);
+    background: rgba(127, 165, 184, 0.08);
+    color: rgba(127, 165, 184, 0.95);
   }
 `;
 
 const MobileToggle = styled.button`
   display: none;
   background: none;
-  border: 1px solid rgba(232, 168, 124, 0.3);
+  border: 1px solid rgba(127, 165, 184, 0.3);
   border-radius: 6px;
-  color: #e8a87c;
+  color: #7fa5b8;
   padding: 0.4rem 0.6rem;
   cursor: pointer;
   font-size: 1.1rem;
@@ -168,7 +168,7 @@ const MobileToggle = styled.button`
   order: 2;
 
   &:hover {
-    background: rgba(126, 200, 176, 0.1);
+    background: rgba(127, 165, 184, 0.1);
   }
 
   @media (max-width: 992px) {

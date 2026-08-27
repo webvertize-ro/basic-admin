@@ -32,10 +32,10 @@ const PageHeading = styled.h2`
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(232, 168, 124, 0.5);
+  color: rgba(127, 165, 184, 0.5);
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(232, 168, 124, 0.1);
+  border-bottom: 1px solid rgba(127, 165, 184, 0.1);
 `;
 
 const SpinnerContainer = styled.div`
@@ -48,7 +48,7 @@ const SpinnerContainer = styled.div`
 const EmptyState = styled.div`
   text-align: center;
   padding: 3rem 1rem;
-  color: rgba(232, 168, 124, 0.35);
+  color: rgba(127, 165, 184, 0.35);
   font-size: 0.85rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;

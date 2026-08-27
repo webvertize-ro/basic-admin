@@ -19,7 +19,7 @@ const StyledH5 = styled.h5`
 const StyledP = styled.p`
   text-align: center;
   font-size: 0.8rem;
-  color: rgba(232, 168, 124, 0.45);
+  color: rgba(127, 165, 184, 0.45);
   margin: 0;
   line-height: 1.5;
 `;
@@ -55,9 +55,9 @@ const CancelButton = styled.button`
   flex: 1;
   padding: 0.45rem 1rem;
   border-radius: 6px;
-  border: 1px solid rgba(232, 168, 124, 0.2);
+  border: 1px solid rgba(127, 165, 184, 0.2);
   background: transparent;
-  color: rgba(232, 168, 124, 0.6);
+  color: rgba(127, 165, 184, 0.6);
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -68,8 +68,8 @@ const CancelButton = styled.button`
     color 0.2s ease;
 
   &:hover {
-    background: rgba(232, 168, 124, 0.08);
-    color: rgba(232, 168, 124, 0.9);
+    background: rgba(127, 165, 184, 0.08);
+    color: rgba(127, 165, 184, 0.9);
   }
 `;
 

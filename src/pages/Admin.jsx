@@ -1,11 +1,10 @@
-// pages/Admin.jsx
-import { useEffect, useState } from 'react';
-import { useContent, useContentInner } from '../hooks/useContent';
-import EditContentModal from '../components/EditContentModal';
-import LoadingSpinner from '../components/LoadingSpinner';
-import styled from 'styled-components';
-import { pageLabels, sectionLabels } from '../utils/labels';
-import { c } from '../utils/content';
+import { useEffect, useState } from "react";
+import { useContent, useContentInner } from "../hooks/useContent";
+import EditContentModal from "../components/EditContentModal";
+import LoadingSpinner from "../components/LoadingSpinner";
+import styled from "styled-components";
+import { pageLabels, sectionLabels } from "../utils/labels";
+import { c } from "../utils/content";
 
 const SpinnerContainer = styled.div`
   min-height: 60vh;
@@ -32,10 +31,10 @@ const Sidebar = styled.aside`
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  background: rgba(46, 32, 24, 0.6);
+  background: rgba(27, 60, 83, 0.6);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-right: 1px solid rgba(232, 168, 124, 0.1);
+  border-right: 1px solid rgba(127, 165, 184, 0.1);
   padding: 1.25rem 0.75rem;
   gap: 0.25rem;
 
@@ -47,9 +46,10 @@ const Sidebar = styled.aside`
     width: 240px;
     z-index: 150;
     padding-top: 5rem;
-    background: rgba(46, 32, 24, 0.97);
-    border-right: 1px solid rgba(232, 168, 124, 0.12);
-    transform: ${({ $open }) => $open ? "translateX(0)" : "translateX(-100%)"};
+    background: rgba(27, 60, 83, 0.97);
+    border-right: 1px solid rgba(127, 165, 184, 0.12);
+    transform: ${({ $open }) =>
+      $open ? "translateX(0)" : "translateX(-100%)"};
     transition: transform 0.25s ease;
   }
 `;
@@ -58,7 +58,7 @@ const SidebarOverlay = styled.div`
   display: none;
 
   @media (max-width: 768px) {
-    display: ${({$open}) => ($open ? 'block' : 'none')};
+    display: ${({ $open }) => ($open ? "block" : "none")};
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
@@ -75,10 +75,10 @@ const MobileMenuButton = styled.button`
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  border: 1px solid rgba(232, 168, 124, 0.3);
-  background: rgba(46, 32, 24, 0.9);
+  border: 1px solid rgba(127, 165, 184, 0.3);
+  background: rgba(27, 60, 83, 0.9);
   backdrop-filter: blur(8px);
-  color: #e8a87c;
+  color: #7fa5b8;
   font-size: 1.2rem;
   cursor: pointer;
   align-items: center;
@@ -97,14 +97,17 @@ const SidebarItem = styled.div`
   letter-spacing: 0.05em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-  background: ${({ $selected }) => $selected ? "rgba(232, 168, 124, 0.14)" : "transparent"};
-  color: ${({$selected}) => $selected ? '#fff' : 'rgba(232, 168, 124, 0.5)'};
-
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+  background: ${({ $selected }) =>
+    $selected ? "rgba(127, 165, 184, 0.14)" : "transparent"};
+  color: ${({ $selected }) =>
+    $selected ? "#fff" : "rgba(127, 165, 184, 0.5)"};
 
   &:hover {
-    background: rgba(232, 168, 124, 0.08);
-    color: rgba(232, 168, 124, 0.9);
+    background: rgba(127, 165, 184, 0.08);
+    color: rgba(127, 165, 184, 0.9);
   }
 `;
 
@@ -123,10 +126,10 @@ const PageHeading = styled.h2`
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(232, 168, 124, 0.5);
+  color: rgba(127, 165, 184, 0.5);
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(232, 168, 124, 0.1);
+  border-bottom: 1px solid rgba(127, 165, 184, 0.1);
 `;
 
 const SectionTitle = styled.div`
@@ -134,16 +137,16 @@ const SectionTitle = styled.div`
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(232, 168, 124, 0.45);
+  color: rgba(127, 165, 184, 0.45);
   padding: 0.5rem 0 0.4rem 0;
 `;
 
 const FieldsContainer = styled.div`
-  border: 1px solid rgba(232, 168, 124, 0.12);
+  border: 1px solid rgba(127, 165, 184, 0.12);
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 1.5rem;
-  background: rgba(46, 32, 24, 0.4);
+  background: rgba(27, 60, 83, 0.4);
 `;
 
 const Field = styled.div`
@@ -152,7 +155,7 @@ const Field = styled.div`
   align-items: center;
   gap: 1rem;
   padding: 0.6rem 1rem;
-  border-bottom: 1px solid rgba(232, 168, 124, 0.07);
+  border-bottom: 1px solid rgba(127, 165, 184, 0.07);
   transition: background 0.15s ease;
 
   &:last-child {
@@ -160,7 +163,7 @@ const Field = styled.div`
   }
 
   &:hover {
-    background: rgba(232, 168, 124, 0.04);
+    background: rgba(127, 165, 184, 0.04);
   }
 
   @media (max-width: 600px) {
@@ -174,7 +177,7 @@ const Label = styled.div`
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(232, 168, 124, 0.45);
+  color: rgba(127, 165, 184, 0.45);
 `;
 
 const Page = styled.div``;
@@ -206,25 +209,28 @@ const EditButton = styled.button`
   flex-shrink: 0;
   padding: 0.35rem 1rem;
   border-radius: 6px;
-  border: 1px solid rgba(232, 168, 124, 0.3);
+  border: 1px solid rgba(127, 165, 184, 0.3);
   background: transparent;
-  color: rgba(232, 168, 124, 0.8);
+  color: rgba(127, 165, 184, 0.8);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
   white-space: nowrap;
-  
+
   &:hover {
-    background: rgba(232, 168, 124, 0.12);
+    background: rgba(127, 165, 184, 0.12);
     color: #fff;
-    border-color: rgba(232, 168, 124, 0.55);
+    border-color: rgba(127, 165, 184, 0.55);
   }
 
   &:active {
-    background: rgba(232, 168, 124, 0.12);
+    background: rgba(127, 165, 184, 0.12);
   }
 
   @media (max-width: 600px) {
@@ -233,7 +239,7 @@ const EditButton = styled.button`
 `;
 
 const EmptyValue = styled.span`
-  color: rgba(232, 168, 124, 0.3);
+  color: rgba(127, 165, 184, 0.3);
   font-style: italic;
   font-size: 0.85rem;
 `;
@@ -241,10 +247,10 @@ const EmptyValue = styled.span`
 const EmptyState = styled.div`
   text-align: center;
   padding: 2rem 1rem;
-  color: rgba(232, 168, 124, 0.35);
+  color: rgba(127, 165, 184, 0.35);
   font-size: 0.78rem;
   letter-spacing: 0.06em;
-  text-transform: uppercase; 
+  text-transform: uppercase;
 `;
 
 const StyledImg = styled.img`
@@ -253,80 +259,114 @@ const StyledImg = styled.img`
 
 function Admin() {
   const { grouped, isLoading } = useContent();
-  const [selectedPage, setSelectedPage] = useState('global');
+  const [selectedPage, setSelectedPage] = useState("global");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [editingField, setEditingField] = useState(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem('page');
+    const saved = localStorage.getItem("page");
     if (saved) setSelectedPage(saved);
-  }, [])
+  }, []);
 
   function handleSelectedTab(page) {
     setSelectedPage(page);
-    localStorage.setItem('page', page);
+    localStorage.setItem("page", page);
   }
 
   const pages = Object.entries(grouped).map(([page]) => page);
 
-  return (<>
-    <AdminLayout>
-      <SidebarOverlay $open={sidebarOpen} onClick={() => setSidebarOpen(false)} />
-      <Sidebar $open={sidebarOpen}>
-        {
-          pages.length === 0 ? <EmptyState>Niciun conținut</EmptyState> : (pages.map((p) => <SidebarItem key={p} $selected={p === selectedPage} onClick={() => { handleSelectedTab(p); setSidebarOpen(false); }}>{pageLabels[p]}</SidebarItem>))
-        }
-      </Sidebar>
+  return (
+    <>
+      <AdminLayout>
+        <SidebarOverlay
+          $open={sidebarOpen}
+          onClick={() => setSidebarOpen(false)}
+        />
+        <Sidebar $open={sidebarOpen}>
+          {pages.length === 0 ? (
+            <EmptyState>Niciun conținut</EmptyState>
+          ) : (
+            pages.map((p) => (
+              <SidebarItem
+                key={p}
+                $selected={p === selectedPage}
+                onClick={() => {
+                  handleSelectedTab(p);
+                  setSidebarOpen(false);
+                }}
+              >
+                {pageLabels[p]}
+              </SidebarItem>
+            ))
+          )}
+        </Sidebar>
 
-      <MainContent>
-        {
-          isLoading ? <SpinnerContainer>
-            <LoadingSpinner />
-          </SpinnerContainer> : <>
-            <PageHeading>Administrare conținut</PageHeading>
-            {
-              Object.entries(grouped).map(([page, sections]) => {
+        <MainContent>
+          {isLoading ? (
+            <SpinnerContainer>
+              <LoadingSpinner />
+            </SpinnerContainer>
+          ) : (
+            <>
+              <PageHeading>Administrare conținut</PageHeading>
+              {Object.entries(grouped).map(([page, sections]) => {
                 if (page !== selectedPage) return null;
 
-                return <Page key={page}>
-                  <SectionsContainer>
-                    {Object.entries(sections).map(([section, fields]) => <Section key={section}>
-                      <SectionTitle>{sectionLabels[section]}</SectionTitle>
-                      <FieldsContainer>
-                        {
-                          fields.map((field) => <Field key={field.id}>
-                            <FieldContent>
-                              <Label>{field.label}</Label>
-                              <Content>
-                                {
-                                  field.content_type === "image_url" ? <StyledImg src={field.value} alt={field.label} /> : field.value ? field.value : <EmptyValue>-</EmptyValue>
-                                }
-                              </Content>
-                            </FieldContent>
-                            <EditButton onClick={() => setEditingField(field)}>Editează</EditButton>
-                          </Field>)
-                        }
-                      </FieldsContainer>
-                    </Section>)}
-                  </SectionsContainer>
-                </Page>
-              })
-            }
-          </>
-        }
-      </MainContent>
-    </AdminLayout>
+                return (
+                  <Page key={page}>
+                    <SectionsContainer>
+                      {Object.entries(sections).map(([section, fields]) => (
+                        <Section key={section}>
+                          <SectionTitle>{sectionLabels[section]}</SectionTitle>
+                          <FieldsContainer>
+                            {fields.map((field) => (
+                              <Field key={field.id}>
+                                <FieldContent>
+                                  <Label>{field.label}</Label>
+                                  <Content>
+                                    {field.content_type === "image_url" ? (
+                                      <StyledImg
+                                        src={field.value}
+                                        alt={field.label}
+                                      />
+                                    ) : field.value ? (
+                                      field.value
+                                    ) : (
+                                      <EmptyValue>-</EmptyValue>
+                                    )}
+                                  </Content>
+                                </FieldContent>
+                                <EditButton
+                                  onClick={() => setEditingField(field)}
+                                >
+                                  Editează
+                                </EditButton>
+                              </Field>
+                            ))}
+                          </FieldsContainer>
+                        </Section>
+                      ))}
+                    </SectionsContainer>
+                  </Page>
+                );
+              })}
+            </>
+          )}
+        </MainContent>
+      </AdminLayout>
 
-    <MobileMenuButton onClick={() => setSidebarOpen((prev) => !prev)}>
-      {
-        sidebarOpen ? '✕' : '☰'
-      }
-    </MobileMenuButton>
+      <MobileMenuButton onClick={() => setSidebarOpen((prev) => !prev)}>
+        {sidebarOpen ? "✕" : "☰"}
+      </MobileMenuButton>
 
-    {
-      editingField && <EditContentModal field={editingField} onClose={() => setEditingField(null)} />
-    }
-  </>);
+      {editingField && (
+        <EditContentModal
+          field={editingField}
+          onClose={() => setEditingField(null)}
+        />
+      )}
+    </>
+  );
 }
 
 export default Admin;
